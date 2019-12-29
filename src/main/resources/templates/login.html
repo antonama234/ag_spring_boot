@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html style="height: 100%"
+      lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Add user page</title>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="../static/css/myCSS.css">
+</head>
+<title>Main Page</title>
+<body class="text-center" style="
+  background-color: #eeeeee;
+  display: flex;
+  align-items: center;
+  height: 100%;">
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-sm-2">
+      <form th:action="@{/login}" method="post">
+        <h1 class="text-center h3 m-2">Please sing in</h1>
+        <div>
+          <input type="text" class="form-control" placeholder="Your login" name="username"/>
+        </div>
+        <div>
+          <input type="password" class="form-control" placeholder="Password" name="password"/>
+        </div>
+        <button class="w-100 p-1 rounded-lg" style="color: #fffffc; background-color: #2d6ca2" type="submit"
+                value="Sign In">Sign In
+        </button>
+      </form>
+      <button class="w-100 p-1 rounded-lg" data-toggle="modal" data-target="#reg"
+              style="color: #fffffc; background-color: #2d6ca2" type="submit" value="Registration">Registration
+      </button>
+      <div class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title">Registration</h2>
+              <button class="close" data-dismiss="modal">&times</button>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+              <form id="registration" th:action="@{/registration}" method="post">
+                <div class="form-group">
+                  <label>Login</label>
+                  <input class="form-control" type="text" name="login" required>
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input class="form-control" type="text" name="password" required>
+                </div>
+                <div class="form-group">
+                  <label>Name</label>
+                  <input class="form-control" type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                  <label>Surname</label>
+                  <input class="form-control" type="text" name="surname" required>
+                </div>
+                <div class="form-group">
+                  <label>Age</label>
+                  <input class="form-control" type="number" name="age" required>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button class="rounded-lg" type="submit"data-dismiss="modal">Close</button>
+              <button class="rounded-lg" type="submit" form="registration" style="color: #fffffc; background-color: #2d6ca2">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

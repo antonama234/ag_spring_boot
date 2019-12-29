@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html
+        lang="ru"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Add user page</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{css/myCSS.css}">
+</head>
+<body>
+<nav class="navbar" style="background-color: #2f2f2f;">
+    <h4 class="navbar-brand" style="color: #9d9d9d">BootStrap</h4>
+    <a class="nav-link form-inline" th:href="@{/logout}" style="color: #9d9d9d;">Logout</a>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 p-0" style="background-color: #f5f5f5; height: 100vh;">
+            <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                <a class="nav-link active" id="adminTab" data-toggle="pill" href="#admin" role="tab"
+                   aria-controls="admin">Admin</a>
+                <a class="nav-link" id="userTab" data-toggle="pill" href="#user" role="tab"
+                   aria-controls="user">User</a>
+            </div>
+        </div>
+        <div class="col-10 p-0" style="background-color: #eeeeee">
+            <div class="tab-content m-5">
+                <div class="tab-pane show active" id="admin" role="tabpanel" aria-labelledby="adminTab">
+                    <h2>Admin panel</h2>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="all" href="#allUsers" data-toggle="pill" role="tab"
+                               aria-controls="allUsers">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="new" href="#addUser" data-toggle="pill" role="tab"
+                               aria-controls="addUser">New User</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content border" style="background-color: white">
+                        <div class="tab-pane show active" id="allUsers" role="tabpanel" aria-labelledby="all">
+                            <h4 class="pl-3 p-1 m-0 border" style="background-color: #eeeeee">All Users</h4>
+                            <table class="table table-striped p-2 m-0">
+                                <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Login</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Surname</th>
+                                    <th scope="col">Age</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="users : ${allUsers}">
+                                    <th scope="row" th:utext="${users.id}"></th>
+                                    <td th:utext="${users.login}"></td>
+                                    <td th:utext="${users.name}"></td>
+                                    <td th:utext="${users.surname}"></td>
+                                    <td th:utext="${users.age}"></td>
+                                    <td class="text-center">
+                                        <button data-toggle="modal" data-target="#edit" type="submit">Edit</button>
+                                    </td>
+                                    <!--Modal window Edit user-->
+                                    <div class="modal fade" id="edit">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h2 class="modal-title">Edit user</h2>
+                                                    <button class="close" data-dismiss="modal">&times</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="editUser" th:action="@{/admin/editUser}" method="post">
+                                                        <fieldset disabled>
+                                                            <div class="form-group">
+                                                                <label>Login</label>
+                                                                <input class="form-control" type="text" name="login"
+                                                                       th:value="${users.id}" required>
+                                                            </div>
+                                                        </fieldset>
+                                                        <div class="form-group">
+                                                            <label>Login</label>
+                                                            <input class="form-control" type="text" name="login"
+                                                                   th:value="${users.login}" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Password</label>
+                                                            <input class="form-control" type="text" name="password"
+                                                                   required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Name</label>
+                                                            <input class="form-control" type="text" name="name"
+                                                                   th:value="${users.name}" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Surname</label>
+                                                            <input class="form-control" type="text" name="surname"
+                                                                   th:value="${users.surname}" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Age</label>
+                                                            <input class="form-control" type="number" name="age"
+                                                                   th:value="${users.age}" required>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="rounded-lg" type="submit" form="editUser"
+                                                            style="color: #fffffc; background-color: #2d6ca2">Edit</button>
+                                                    <button class="rounded-lg" type="submit" data-dismiss="modal">Close </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <td class="text-center">
+                                        <form th:action="@{/admin/deleteUser}" method="post">
+                                            <input type="hidden" id="id" name="id" th:value="*{users.id}"/>
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane flex-column" id="addUser" role="tabpanel" aria-labelledby="new">
+                            <div class="row justify-content-center">
+                                <form class="col-4 text-center m-3 " th:action="@{/admin/addUser}" method="post">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Login</label>
+                                        <input class="form-control" style="align-self: center" type="text" name="login"
+                                               placeholder="Login" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Password</label>
+                                        <input class="form-control" type="text" name="password" placeholder="Password"
+                                               required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Name</label>
+                                        <input class="form-control" type="text" name="name" placeholder="Name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Surname</label>
+                                        <input class="form-control" type="text" name="surname" placeholder="Surname"
+                                               required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Age</label>
+                                        <input class="form-control" type="number" name="age" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Role</label>
+                                        <select class="form-control">
+                                            <option>USER</option>
+                                            <option>ADMIN</option>
+                                        </select>
+                                    </div>
+                                    <button class="rounded-lg" type="submit"
+                                            style="color: #fffffc; background-color: #459c45">Add new user
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" role="tabpanel" id="user" aria-labelledby="userTab">
+                    <p th:utext="${#session.getAttribute('greeting')}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form th:action="@{/admin/addUser}" method="get">
+    <button type="submit">Add new user</button>
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
