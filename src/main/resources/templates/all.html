@@ -120,7 +120,7 @@
                                         </div>
                                     </div>
                                     <td class="text-center">
-                                        <form th:action="@{/admin/deleteUser}" method="post">
+                                        <form th:action="@{/admin/deleteUser}" method="delete">
                                             <input type="hidden" id="id" name="id" th:value="*{users.id}"/>
                                             <button type="submit">Delete</button>
                                         </form>
@@ -157,7 +157,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="font-weight-bold">Role</label>
-                                        <select class="form-control">
+                                        <select class="form-control" type="text" name="role">
                                             <option>USER</option>
                                             <option>ADMIN</option>
                                         </select>
