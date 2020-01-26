@@ -1,5 +1,7 @@
 package ru.anton.gorbachev.ag_spring_boot.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -8,6 +10,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Role implements GrantedAuthority {
 
     @Id

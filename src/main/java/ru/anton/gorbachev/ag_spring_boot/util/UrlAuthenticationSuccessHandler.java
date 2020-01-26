@@ -28,7 +28,7 @@ public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHan
         if (user) {
             httpServletResponse.sendRedirect("/user");
         } else if (admin) {
-            httpServletResponse.sendRedirect("/admin/allUsers");
+            httpServletResponse.sendRedirect("/admin");
         }
         httpServletResponse.setStatus(HttpServletResponse.SC_OK);
     }

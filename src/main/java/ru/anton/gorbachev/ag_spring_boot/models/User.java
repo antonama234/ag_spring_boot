@@ -1,13 +1,20 @@
 package ru.anton.gorbachev.ag_spring_boot.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class User implements UserDetails {
     @Id
     @Column(name = "id")
@@ -29,19 +36,24 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "role")
+    private String role;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles;
 
-    public User(String name, String surname, Long age, String login, String password) {
+    public User(String name, String surname, Long age, String login, String password, String role) {
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.login = login;
         this.password = password;
+        this.role = role;
+        this.roles = new HashSet<>();
     }
 
     public User() {
@@ -93,6 +105,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Set<Role> getRoles() {
