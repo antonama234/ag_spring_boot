@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping(value = "/user")
     public ModelAndView userPage(HttpServletRequest request, Principal principal) {
-        User user = (User) service.loadUserByUsername(principal.getName());
+        User user = service.findByLogin(principal.getName());
         HttpSession session = request.getSession();
         session.setAttribute("greeting", "Welcome to your page " + user.getName() + " " + user.getSurname());
         return new ModelAndView("user");

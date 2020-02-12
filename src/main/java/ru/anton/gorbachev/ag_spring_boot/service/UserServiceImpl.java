@@ -12,18 +12,12 @@ import  ru.anton.gorbachev.ag_spring_boot.models.User;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
     private UserDAO dao;
 
     @Autowired
     public UserServiceImpl(UserDAO dao) {
         this.dao = dao;
-    }
-
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return dao.findByLogin(login);
     }
 
     @Override
@@ -59,6 +53,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public User findUserById(Long id) {
         return dao.findUserById(id);
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        return dao.findByLogin(login);
     }
 
     @Override

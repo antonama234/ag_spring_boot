@@ -10,5 +10,6 @@ public interface UserService extends Service<User> {
     void deleteUser(User object);
     void editUser(User object);
     User findUserById(Long id);
+    User findByLogin(String login);
     boolean isExist(String login);
 }
